@@ -1,0 +1,9 @@
+<div class="w-full">
+    <%= render 'groups/group_nav'%>
+
+    <div id="group_users" class="min-w-full">
+    <% @group_users.each do |group_user| %>
+      <h1 class="font-medium leading-tight text-5xl mt-0 mb-2 text-blue-600"><%= group_user.title %></h1>
+    <% end %>
+  </div>
+</div>
