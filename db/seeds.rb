@@ -6,3 +6,13 @@
         puts ex
     end
 end
+
+
+5.times do |index|
+    begin
+        user = User.all.sample
+        Group.create!({:title => "Group#{index}", :user => user})
+    rescue => ex
+        puts ex
+    end
+end
