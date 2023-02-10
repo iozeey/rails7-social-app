@@ -9,6 +9,8 @@ class GroupsController < ApplicationController
 
   # GET /groups/1 or /groups/1.json
   def show
+    @post = Post.new
+    @posts = @group.posts
   end
 
   # GET /groups/new

@@ -1,0 +1,6 @@
+<%= form_with(model: post, class: "contents") do |form| %>
+  <%= text_field(:post, :title, value: post.title, class: 'form-control')  %>
+  <%= text_field(:post, :content, value: post.content, class: 'form-control')  %>
+  <%= text_field(:post, :group_id, value: group.id, class: 'form-control' ,style:"display:none;")  %>
+  <%= form.submit class: "rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
+<% end %>
