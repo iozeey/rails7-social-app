@@ -14,7 +14,7 @@ class GroupUsersController < ApplicationController
                 format.html { redirect_to group_url(@group_user), notice: "Joined successfully." }
                 format.json { render :show, status: :created, location: @group_user }
             else
-                format.html { render :new, status: :unprocessable_entity }
+                format.html { redirect_to groups_url, alert: "Unable to join." }
                 format.json { render json: @group_user.errors, status: :unprocessable_entity }
             end
         end
