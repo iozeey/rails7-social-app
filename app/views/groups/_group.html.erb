@@ -1,0 +1,8 @@
+<h1 class="font-medium leading-tight text-5xl mt-0 mb-2 text-blue-600"><%= group.title %></h1>
+<div id="<%= dom_id group %>">
+  <% if action_name != "show" %>
+    <%= link_to "Show this group", group, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+    <%= link_to 'Edit this group', edit_group_path(group), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
+    <hr class="mt-6">
+  <% end %>
+</div>
