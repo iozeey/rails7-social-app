@@ -1,5 +1,15 @@
 <h1 class="font-medium leading-tight text-5xl mt-0 mb-2 text-blue-600"><%= group.title %></h1>
 <div id="<%= dom_id group %>">
+<div class="flex flex-wrap justify-center space-x-2">
+  <span
+    class="px-4 py-2 rounded-full border border-gray-300 text-gray-500 font-semibold text-sm flex align-center w-max cursor-pointer active:bg-gray-300 transition duration-300 ease">
+    <%= group.groups.count %> members
+  </span>
+  <span
+    class="px-4 py-2 rounded-full border border-gray-300 text-gray-500 font-semibold text-sm flex align-center w-max cursor-pointer active:bg-gray-300 transition duration-300 ease">
+    <%= group.last_activity %>
+  </span>
+</div>
   <% if action_name != "show" %>
     <%= link_to "Show this group", group, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
     <%= link_to 'Edit this group', edit_group_path(group), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
