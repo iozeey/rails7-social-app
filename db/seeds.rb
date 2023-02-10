@@ -16,3 +16,13 @@ end
         puts ex
     end
 end
+
+5.times do |index|
+    begin
+        user_id = User.all.sample.id
+        group_id = Group.all.sample.id
+        GroupUser.create!({:user_id => user_id, :group_id => group_id})
+    rescue => ex
+        puts ex
+    end
+end
