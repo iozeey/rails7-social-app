@@ -1,0 +1,13 @@
+<div class="mx-auto md:w-2/3 w-full flex">
+  <div class="mx-auto">
+    <%= form_with(model: comment, class: "contents") do |form| %>
+      <%= text_field(:comment, :content, value: comment.content, class: 'form-control')  %>
+
+      <%= form.hidden_field :post_id %>
+      <div class="inline">
+        <%= form.submit class: "rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
