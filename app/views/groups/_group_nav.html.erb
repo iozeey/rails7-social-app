@@ -47,7 +47,9 @@
     </div>
   
     <div class="flex justify-between items-center">
-      <%= link_to 'Create a new group', new_group_path, class: "px-6
+      <%= link_to 'Create a new group', new_group_path, 
+          data: {turbo_frame: "modal"},
+          class: "px-6
           py-2
           border-2 border-blue-600
           text-blue-600

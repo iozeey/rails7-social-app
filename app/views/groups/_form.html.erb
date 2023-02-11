@@ -1,4 +1,5 @@
 <%= form_with(model: group, class: "contents") do |form| %>
+
   <% if group.errors.any? %>
     <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
       <h2><%= pluralize(group.errors.count, "error") %> prohibited this group from being saved:</h2>
@@ -10,13 +11,29 @@
       </ul>
     </div>
   <% end %>
+
   <div class="form-group">
-    <div class="custom-file">
-      <%= form.label :title, "Group Name" , class: "custom-file-label"%>    
-      <%= form.text_field :title, class: "custom-file-input"		 %>
-    </div>
+    <%= form.label :title, "Group Name" , class: "form-label inline-block mb-2 text-gray-700"%>    
+    <%= form.text_field :title, class: "form-control
+      block
+      w-full
+      px-3
+      py-1.5
+      text-base
+      font-normal
+      text-gray-700
+      bg-white bg-clip-padding
+      border border-solid border-gray-300
+      rounded
+      transition
+      ease-in-out
+      m-0
+      focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" 
+      %>
   </div>
-  <div class="inline">
-    <%= form.submit class: "rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
+
+  <div class="inline my-3 md:block">
+    <%= form.submit class: "inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out cursor-pointer" %>
+     <%= button_tag "Close", data: { action: "turbo-modal#hideModal" }, type: "button", class: "inline-block px-6 py-2.5 bg-gray-200 text-gray-700 font-medium text-xs leading-tight uppercase rounded hover:bg-gray-300  focus:bg-gray-300   focus:outline-none focus:ring-0 active:bg-gray-400 transition duration-150 ease-in-out bg-gray-100 border" %>
   </div>
 <% end %>
