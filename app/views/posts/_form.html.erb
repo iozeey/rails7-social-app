@@ -1,6 +1,14 @@
 <%= form_with(model: post, class: "contents") do |form| %>
-  <%= text_field(:post, :title, value: post.title, class: 'form-control')  %>
-  <%= text_field(:post, :content, value: post.content, class: 'form-control')  %>
-  <%= text_field(:post, :group_id, value: group.id, class: 'form-control' ,style:"display:none;")  %>
-  <%= form.submit class: "rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
+  <div class="bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-100">
+    <div class="form-group">
+      <%= form.label :title, "Title" , class: "form-label inline-block mb-2 text-gray-700"%>    
+      <%= text_field(:post, :title, value: post.title, class: 'form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none')  %>
+    </div>
+    <div class="form-group">
+      <%= form.label :title, "Content" , class: "form-label inline-block mb-2 text-gray-700"%>    
+      <%= text_area(:post, :content, value: post.content, class: 'form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none')  %>
+    </div>
+    <%= text_field(:post, :group_id, value: group.id ,style:"display:none;")  %>
+    <%= form.submit class: "mt-4 rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
+  </div>
 <% end %>
