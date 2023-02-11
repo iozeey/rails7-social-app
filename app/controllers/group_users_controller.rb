@@ -1,5 +1,5 @@
 class GroupUsersController < ApplicationController
-    before_action :authenticate_user!
+    before_action :authenticate_user!    
   
     def index
         @group_users = current_user.groups.all
@@ -20,7 +20,23 @@ class GroupUsersController < ApplicationController
         end
     end
 
+      # DELETE /groups/1 or /groups/1.json
+    def destroy
+        @group_user = GroupUser.where(group_id: params[:id], user_id: current_user.id).first
+
+        @group_user.destroy
+
+        respond_to do |format|
+        format.html { redirect_to groups_url, notice: "Successfully left." }
+        format.json { head :no_content }
+        end
+    end
+
     private
+    # Use callbacks to share common setup or constraints between actions.
+    def set_group
+        @group_user = GroupUser.find(group_users_params[:group_id])
+    end
 
     def group_users_params
       params.fetch(:group_users, {}).permit(:group_id)

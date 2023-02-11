@@ -1,21 +1,51 @@
-<h1 class="font-medium leading-tight text-5xl mt-0 mb-2 text-blue-600"><%= group.title %></h1>
 <div id="<%= dom_id group %>">
-<div class="flex flex-wrap justify-center space-x-2">
-  <span
-    class="px-4 py-2 rounded-full border border-gray-300 text-gray-500 font-semibold text-sm flex align-center w-max cursor-pointer active:bg-gray-300 transition duration-300 ease">
-    <%= group.groups.count %> members
-  </span>
-  <span
-    class="px-4 py-2 rounded-full border border-gray-300 text-gray-500 font-semibold text-sm flex align-center w-max cursor-pointer active:bg-gray-300 transition duration-300 ease">
-    <%= group.last_activity %>
-  </span>
-</div>
-  <% if action_name != "show" %>
-    <%= link_to "Show this group", group, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-    <%= link_to 'Edit this group', edit_group_path(group), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
-    <%= form_with(url: group_users_path , method: "post") do |f| %>
-      <%= text_field(:group_users, :group_id, value: group.id, class: 'form-control' ,style:"display:none;")  %>
-      <%= f.submit 'Join',  class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
+  <div class="flex flex-wrap justify-between width-50%">
+    <h1 class="font-medium leading-tight text-5xl mt-0 mb-2 text-blue-600"><%= link_to group.title, group %></h1>
+    <% if action_name == "index" || action_name== "create" %>
+      <% if group.group_users.where(user_id: current_user.id).exists? == false %>
+        <%= form_with(url: group_users_path , method: "post") do |f| %>
+          <%= text_field(:group_users, :group_id, value: group.id, class: 'form-control' ,style:"display:none;")  %>
+          <%= f.submit 'Join',  class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium cursor-pointer " %>
+        <% end %>
+      <% end %>
+      <% if group.group_users.where(user_id: current_user.id).exists? %>
+        <div class="inline-block ml-2">
+          <%= link_to "Leave","#{group_users_path}/#{group.id}", class: "rounded-lg py-3 ml-2 px-5 bg-red-500 inline-block font-medium cursor-pointer", data: { turbo_method: "delete", turbo_confirm: "Are you sure?" } %>
+        </div>
+      <% end %>
     <% end %>
-  <% end %>
-</div>
+
+    <% if action_name == "show" || action_name == "update" %>
+      
+      <% if @group.user_id == current_user.id %>
+        <div class="flex flex-wrap justify-between width-50%">
+          <div class="inline-block ml-2">
+              <%= button_to 'Edit', edit_group_path(@group),method: :get,  data: {turbo_frame: "modal"}, class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 font-medium" %> 
+          </div>
+          <div class="inline-block ml-2">
+            <%= button_to 'Destroy', group_path(@group), method: :delete, class: "mt-2 rounded-lg py-3 px-5 bg-red-500 font-medium" %>
+          </div>
+        </div>
+       <% end %>
+       
+    <% end %>
+  </div>
+
+  <div class="flex flex-wrap justify-start space-x-2">
+    <span
+      class="px-4 py-1 rounded-full border border-gray-300 text-gray-500 text-sm flex align-center w-max cursor-pointer active:bg-gray-300 transition duration-300 ease">
+      <%= group.groups.count %> members
+    </span>
+
+      <span
+      class="px-4 py-1 rounded-full border border-gray-300 text-gray-500 text-sm flex align-center w-max cursor-pointer active:bg-gray-300 transition duration-300 ease">
+      <%= group.posts.count %> Posts
+    </span>
+    <span
+      class="px-4 py-1 rounded-full border border-gray-300 text-gray-500 text-sm flex align-center w-max cursor-pointer active:bg-gray-300 transition duration-300 ease">
+      <%= "Last activity #{time_ago_in_words(group.last_activity)} ago" if group.last_activity %>
+
+    </span>
+  </div>
+  
+</div>  
