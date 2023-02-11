@@ -1,9 +1,10 @@
 class PostsController < ApplicationController
   before_action :set_post, only: %i[ show edit update destroy ]
+  before_action :check_is_member
 
   # GET /posts or /posts.json
   def index
-    @posts = Post.all
+    @posts = Post.order(created_at: :desc)
   end
 
   # GET /posts/1 or /posts/1.json
@@ -25,12 +26,13 @@ class PostsController < ApplicationController
     @post= Post.new(post_params.merge(user_id: current_user.id))
     @group = Group.find(post_params[:group_id])
     respond_to do |format|
-      if @post.save
+      if @is_member && @post.save
         format.html { redirect_to group_url(@group), notice: "Post was successfully created." }
         format.json { render :show, status: :created, location: @post }
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @post.errors, status: :unprocessable_entity }
+        validation_message = @is_member ?  @post.errors : "Your are not member of this group"
+        format.html { redirect_to group_url(@group), status: :unprocessable_entity, alert: validation_message  }
+        format.json { render json: validation_message, status: :unprocessable_entity }
       end
     end
   end
@@ -62,6 +64,10 @@ class PostsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_post
       @post = Post.find(params[:id])
+    end
+
+    def check_is_member
+      @is_member = current_user.group_users.where(group_id: post_params[:group_id]).exists?
     end
 
     # Only allow a list of trusted parameters through.
