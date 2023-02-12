@@ -8,7 +8,7 @@
     <%= render "posts/form", group: @group, post: @post %>
 
     <% @posts.each do |post| %>
-      <%= render "posts/post", post: post %>
+      <%= render "posts/post", post: post, is_show_action: true %>
     <% end %>
 
   </div>

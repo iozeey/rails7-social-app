@@ -1,4 +1,30 @@
 <div id="<%= dom_id post %>">
     <h1 class="font-medium leading-tight text-3xl mt-0 mb-2 text-black-600"><%= link_to  post.title, post %></h1>
     <p class="leading-tight mt-0 mb-2"><%= post.content %></p>
+
+    <div class="flex flex-wrap justify-start space-x-2">
+        <%- if post.user %>
+            <span
+            class="px-4 py-1 rounded-full border border-gray-300 text-gray-500 text-sm flex align-center w-max cursor-pointer active:bg-gray-300 transition duration-300 ease">
+                <%= "#{(post.user.name)}"%>
+            </span>
+        <% end %>
+
+        <span
+        class="px-4 py-1 rounded-full border border-gray-300 text-gray-500 text-sm flex align-center w-max cursor-pointer active:bg-gray-300 transition duration-300 ease">
+        <%= "Last Commented #{time_ago_in_words(post.last_activity)} ago" if post.last_activity %>
+        </span>
+    </div>
+
+    <%- if is_show_action && post.user.id == current_user.id %>
+        <div class="flex flex-wrap justify-between width-50%">
+          <div class="inline-block ml-2">
+              <%= button_to 'Edit', edit_post_path(post),method: :get,  data: {turbo_frame: "modal"}, class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 font-medium" %> 
+          </div>
+          <div class="inline-block ml-2">
+            <%= button_to 'Destroykj', post_path(post), method: :delete, class: "mt-2 rounded-lg py-3 px-5 bg-red-500 font-medium" %>
+          </div>
+        </div>
+    <% end %>
+       
 </div>

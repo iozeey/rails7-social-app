@@ -13,14 +13,9 @@ class PostsController < ApplicationController
     @comments = @post.comments
   end
 
-  # GET /posts/new
-  def new
-    @post = Post.new
-  end
-
   # GET /posts/1/edit
   def edit
-    @comments = @post.comment.where(parent_id: nill).all
+    @group = @post.group
   end
 
   # POST /posts or /posts.json
@@ -57,7 +52,7 @@ class PostsController < ApplicationController
     @post.destroy
 
     respond_to do |format|
-      format.html { redirect_to posts_url, notice: "Post was successfully destroyed." }
+      format.html { redirect_to group_url, notice: "Post was successfully destroyed." }
       format.json { head :no_content }
     end
   end

@@ -1,6 +1,6 @@
 <div class="mx-auto md:w-2/3 w-full">
   <div class="mx-auto">
-    <%= render @post %>
+    <%= render @post, is_show_action: false  %>
     <h1 class="font-medium leading-tight text-3xl mt-0 mb-2 text-black-600">Comments</h1>
 
     <%- @comments.each do |comment|%>
@@ -8,18 +8,19 @@
       <p class="text-base font-light leading-relaxed mt-0 text-gray-800">
         <%= comment.content%>
       </p>
-        <div class="flex flex-wrap justify-start space-x-2">
+      <div class="flex flex-wrap justify-start space-x-2">
+        <%-  if comment.user %>
           <span
             class="px-4 py-1 rounded-full border border-gray-300 text-gray-500 text-sm flex align-center w-max cursor-pointer active:bg-gray-300 transition duration-300 ease">
-            <%= "#{(comment.user.name)}" if comment.user %>
+            <%= "#{(comment.user.name)}" %>
 
           </span>
-
-          <span
-            class="px-4 py-1 rounded-full border border-gray-300 text-gray-500 text-sm flex align-center w-max cursor-pointer active:bg-gray-300 transition duration-300 ease">
-            <%= "Commented #{time_ago_in_words(comment.post.last_activity)} ago" if comment.post.last_activity %>
-          </span>
-        </div>
+        <% end %>
+        <span
+          class="px-4 py-1 rounded-full border border-gray-300 text-gray-500 text-sm flex align-center w-max cursor-pointer active:bg-gray-300 transition duration-300 ease">
+          <%= "Commented #{time_ago_in_words(comment.post.last_activity)} ago" if comment.post.last_activity %>
+        </span>
+      </div>
       <%- comment.replies.each do |rc|%>
         <p class="ml-4 text-base font-light leading-relaxed mt-0 text-gray-800">
           <%= rc.content%>
