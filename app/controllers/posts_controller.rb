@@ -10,6 +10,7 @@ class PostsController < ApplicationController
   # GET /posts/1 or /posts/1.json
   def show
     @comment = @post.comments.build
+    @comments = @post.comments
   end
 
   # GET /posts/new
@@ -19,6 +20,7 @@ class PostsController < ApplicationController
 
   # GET /posts/1/edit
   def edit
+    @comments = @post.comment.where(parent_id: nill).all
   end
 
   # POST /posts or /posts.json

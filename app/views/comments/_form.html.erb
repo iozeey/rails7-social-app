@@ -1,13 +1,14 @@
-<div class="mx-auto md:w-2/3 w-full flex">
-  <div class="mx-auto">
-    <%= form_with(model: comment, class: "contents") do |form| %>
-      <%= text_field(:comment, :content, value: comment.content, class: 'form-control')  %>
-
+<div class="w-full">
+  <div class="mt-2">
+    
+    <%= form_with(model: [@post, comment], class: "contents") do |form| %>
+      <%= text_area(:comment, :content, value: comment.content, class: "form-control  block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none") %>
       <%= form.hidden_field :post_id %>
       <div class="inline">
-        <%= form.submit class: "rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
+        <%= form.submit class: "px-6 mt-3 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" %>
       </div>
     <% end %>
+
   </div>
 </div>
 
