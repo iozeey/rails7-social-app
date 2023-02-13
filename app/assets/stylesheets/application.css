@@ -14,13 +14,27 @@
  *= require_self
  *= require font-awesome
  */
- #modal {
-    position: absolute;
-    z-index: 2;
-    right: 40%;
-    top: 20%;
-    width: 400px;
-    word-break: break-word;
-    border-radius: 6px;
-    background: #bad5ff;
-  }
+#modal {
+  position: absolute;
+  z-index: 2;
+  right: 40%;
+  top: 20%;
+  width: 400px;
+  word-break: break-word;
+  border-radius: 6px;
+  background: #bad5ff;
+}
+
+.modal-backdrop.show {
+  opacity: 0.5;
+}
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  width: 100vw;
+  height: 100vh;
+  background-color: #000;
+}
