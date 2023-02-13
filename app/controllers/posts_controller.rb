@@ -24,10 +24,23 @@ class PostsController < ApplicationController
     @group = Group.find(post_params[:group_id])
     respond_to do |format|
       if @is_member && @post.save
+        format.turbo_stream do 
+          render turbo_stream: [
+             turbo_stream.replace("post_form", partial: 'posts/form', locals: {is_show_action: true, post: Post.new, group: Group.new}),
+             turbo_stream.prepend("all_posts", partial: 'posts/post', locals: {is_show_action: true, post: @post, group: @group}) 
+          ]
+        end
         format.html { redirect_to group_url(@group), notice: "Post was successfully created." }
         format.json { render :show, status: :created, location: @post }
       else
         validation_message = @is_member ?  @post.errors : "Your are not member of this group"
+        format.turbo_stream do
+          render turbo_stream: [
+            turbo_stream.update('post_form',
+                                partial: "posts/form",
+                                locals: {post: @post, group: @group})
+            ]
+        end
         format.html { redirect_to group_url(@group), status: :unprocessable_entity, alert: validation_message  }
         format.json { render json: validation_message, status: :unprocessable_entity }
       end
@@ -52,6 +65,7 @@ class PostsController < ApplicationController
     @post.destroy
 
     respond_to do |format|
+      format.turbo_stream { render turbo_stream: turbo_stream.remove(@post) }
       format.html { redirect_to group_url, notice: "Post was successfully destroyed." }
       format.json { head :no_content }
     end

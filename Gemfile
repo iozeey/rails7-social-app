@@ -76,3 +76,5 @@ end
 gem "tailwindcss-rails", "~> 2.0"
 
 gem "view_component", "~> 2.82"
+
+gem 'font-awesome-rails', '~>4.x'
