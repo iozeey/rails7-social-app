@@ -36,9 +36,7 @@ class PostsController < ApplicationController
         validation_message = @is_member ?  @post.errors : "Your are not member of this group"
         format.turbo_stream do
           render turbo_stream: [
-            turbo_stream.update('post_form',
-                                partial: "posts/form",
-                                locals: {post: @post, group: @group})
+              turbo_stream.replace("notification", partial: 'layouts/notice', locals: { alert: validation_message}),
             ]
         end
         format.html { redirect_to group_url(@group), status: :unprocessable_entity, alert: validation_message  }
