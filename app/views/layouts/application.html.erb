@@ -16,13 +16,11 @@
     <%= turbo_frame_tag :modal %>
     <%= render 'layouts/header' %>
     
-    <div class="container mx-auto box-border border-2">
-      <% if notice.present? %>
-        <p class="container flex py-2 justify-center w-max py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
-      <% end %>
-       <% if alert.present? %>
-        <p class="container flex py-2 justify-center w-max px-3 bg-red-50 mb-5 text-red-500 font-medium rounded-lg inline-block" id="notice"><%= alert %></p>
-      <% end %>
+    <div class="container mx-auto">
+      <%= render 'layouts/notice' %>
+    </div>
+    
+    <div class="container mx-auto box-border border-2" id="notification">
       <%= yield %>
     </div>
   </body>

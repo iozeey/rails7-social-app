@@ -10,7 +10,7 @@ class PostsController < ApplicationController
   # GET /posts/1 or /posts/1.json
   def show
     @comment = @post.comments.build
-    @comments = @post.comments
+    @comments = @post.comments.where(parent_id: nil).order(created_at: :desc)
   end
 
   # GET /posts/1/edit
@@ -26,6 +26,8 @@ class PostsController < ApplicationController
       if @is_member && @post.save
         format.turbo_stream do 
           render turbo_stream: [
+            turbo_stream.replace("notification", partial: 'layouts/notice', locals: { notice: "Post was successfully created."}),
+
              turbo_stream.replace("post_form", partial: 'posts/form', locals: {is_show_action: true, post: Post.new, group: Group.new}),
              turbo_stream.prepend("all_posts", partial: 'posts/post', locals: {is_show_action: true, post: @post, group: @group}) 
           ]

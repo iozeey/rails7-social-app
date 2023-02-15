@@ -1,0 +1,6 @@
+<div id="<%= dom_id(comment,"post_#{post.id}") %>" class="flex justify-between border m-2">
+    <span class="ml-4 text-base font-light leading-relaxed mt-0 text-gray-800">
+        <%= comment.content%>
+    </span>
+    <%= button_to 'Destroy', [post, comment], method: :delete, class: "px-4 py-1 rounded-full border border-gray-300 text-gray-500 text-sm flex align-center w-max cursor-pointer active:bg-gray-300 transition duration-300 ease" %>
+</div>

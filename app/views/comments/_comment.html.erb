@@ -1,9 +1,35 @@
-<div id="<%= dom_id comment %>">
-  <%= render comment.replies if comment.replies.any? %>
+<%- if comment.persisted? %>
+  <div id="<%= dom_id(comment,"post_#{post.id}") %>" class="border p-2">
+      <p class="text-base font-light leading-relaxed mt-0 text-gray-800">
+        <%= comment.content%>
+        <%= comment.id%>
+      </p>
 
-  <% if action_name != "show" %>
-    <%= link_to "Show this comment", post_comment_path(Post.first), class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-    <%= link_to 'Edit this comment', edit_post_comment_url(id: comment.id), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
-    <hr class="mt-6">
-  <% end %>
-</div>
+      <div class="flex flex-wrap justify-start space-x-2">
+        <%-  if comment.user %>
+          <span
+            class="px-4 py-1 rounded-full border border-gray-300 text-gray-500 text-sm flex align-center w-max cursor-pointer active:bg-gray-300 transition duration-300 ease">
+            <%= "#{(comment.user.name)}" %>
+          </span>
+        <% end %>
+        <span
+          class="px-4 py-1 rounded-full border border-gray-300 text-gray-500 text-sm flex align-center w-max cursor-pointer active:bg-gray-300 transition duration-300 ease">
+          <%= "Commented #{time_ago_in_words(comment.post.last_activity)} ago" if comment.post.last_activity %>
+        </span>
+
+        <span data-controller="comment" data-action="click->comment#toggleReplyBox"  data-comment-form-param="comment_reply_form_<%=comment.id%>" class="px-4 py-1 rounded-full border border-gray-300 text-gray-500 text-sm flex align-center w-max cursor-pointer active:bg-gray-300 transition duration-300 ease">
+          Reply
+        </span>
+              
+        <%= button_to 'Destroy', [post, comment], method: :delete, class: "px-4 py-1 rounded-full border border-gray-300 text-gray-500 text-sm flex align-center w-max cursor-pointer active:bg-gray-300 transition duration-300 ease" %>
+
+      </div>
+      <div id="<%= dom_id(comment,"replies_post_#{post.id}") %>">
+        <%- comment.replies.each do |rc|%>
+          <%= render "comments/replied", comment: rc, post: @post %>        
+        <% end %>
+      </div>
+      <%= render "comments/reply", comment: comment, post: @post %>        
+
+  </div>
+<% end %>
